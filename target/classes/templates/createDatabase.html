@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <form action="/createDatabase" method="post">
+        <label for="databaseName">Database Name:</label>
+        <input type="text" id="databaseName" name="databaseName" required><br><br>
+        <label for="numCollections">Number of Collections:</label>
+        <input type="number" id="numCollections" name="numCollections" required><br><br>
+
+        <div id="collections">
+            <!-- Collection Fields will be added dynamically using JavaScript -->
+        </div>
+
+        <input type="submit" value="Create Database">
+    </form>
+
+    <button type="button" onclick="addCollection()">Add Collection</button>
+
+    <script>
+        function addCollection() {
+            const numCollections = document.getElementById('numCollections').value;
+            const collectionsDiv = document.getElementById('collections');
+            collectionsDiv.innerHTML = '';
+            for (let i = 0; i < numCollections; i++) {
+                const collectionDiv = document.createElement('div');
+                collectionDiv.innerHTML = `
+            <h3>Collection ${i + 1}</h3>
+            <label for="collectionName${i}">Collection Name:</label>
+            <input type="text" id="collectionName${i}" name="collectionName${i}" required><br>
+            <label for="numProperties${i}">Number of Properties:</label>
+            <input type="number" id="numProperties${i}" name="numProperties${i}" required><br>
+            <div id="properties${i}">
+                <!-- Property Fields will be added dynamically using JavaScript -->
+            </div>
+            <button type="button" onclick="addProperty(${i})">Add Property</button>
+            <hr>
+        `;
+                collectionsDiv.appendChild(collectionDiv);
+            }
+        }
+
+        function addProperty(collectionIndex) {
+            const numProperties = document.getElementById(`numProperties${collectionIndex}`).value;
+            const propertiesDiv = document.getElementById(`properties${collectionIndex}`);
+            propertiesDiv.innerHTML = '';
+            for (let i = 0; i < numProperties; i++) {
+                const propertyDiv = document.createElement('div');
+                propertyDiv.innerHTML = `
+            <label for="propertyName${collectionIndex}-${i}">Property Name:</label>
+            <input type="text" id="propertyName${collectionIndex}-${i}" name="propertyName${collectionIndex}-${i}" required>
+            <label for="propertyType${collectionIndex}-${i}">Property Type:</label>
+            <select id="propertyType${collectionIndex}-${i}" name="propertyType${collectionIndex}-${i}" required>
+                <option value="integer">Integer</option>
+                <option value="string">String</option>
+                <option value="array">Array</option>
+                <!-- Add other property types as needed -->
+            </select><br>
+        `;
+                propertiesDiv.appendChild(propertyDiv);
+            }
+        }
+    </script>
+    <title></title>
+</head>
+<body>
+
+</body>
+</html>

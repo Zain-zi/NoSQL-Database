@@ -1,0 +1,1 @@
+{"collectionName":"LibraryUsers","properties":[{"name":"username","type":"string"},{"name":"password","type":"string"},{"name":"email","type":"string"},{"name":"booksBorrowed","type":"array"}]}

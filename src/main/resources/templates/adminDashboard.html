@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+</head>
+<body>
+<h1>Welcome, Admin!</h1>
+<button onclick="window.location.href='/createDatabase'">Create New Database</button>
+<button onclick="toggleDeleteDatabase()">Delete Database</button>
+
+<button onclick="toggleCreateCollection()">Create Collection</button>
+<button onclick="toggleDeleteCollection()">Delete Collection</button>
+<button onclick="window.location.href='/documents'">Handle Documents</button>
+<!-- Create Database Form -->
+<div id="createDatabaseForm" style="display:none;">
+  <label for="dbNameToCreate">Database Name to Create:</label>
+  <input type="text" id="dbNameToCreate">
+  <button onclick="createDatabase()">Create</button>
+</div>
+
+<!-- Delete Database Form -->
+<div id="deleteDatabaseForm" style="display:none;">
+  <label for="dbNameToDelete">Database Name to Delete:</label>
+  <input type="text" id="dbNameToDelete">
+  <button onclick="deleteDatabase()">Delete</button>
+</div>
+
+<!-- Create Collection Form -->
+<div id="createCollectionForm" style="display:none;">
+  <label for="createDbName">Database Name:</label>
+  <input type="text" id="createDbName"><br>
+  <label for="createCollectionName">Collection Name:</label>
+  <input type="text" id="createCollectionName"><br>
+  <button onclick="createCollection()">Create Collection</button>
+</div>
+
+<!-- Delete Collection Form -->
+<div id="deleteCollectionForm" style="display:none;">
+  <label for="deleteDbName">Database Name:</label>
+  <input type="text" id="deleteDbName"><br>
+  <label for="deleteCollectionName">Collection Name:</label>
+  <input type="text" id="deleteCollectionName"><br>
+  <button onclick="deleteCollection()">Delete Collection</button>
+</div>
+
+
+<script>
+  function hideAllForms() {
+    document.getElementById('createDatabaseForm').style.display = 'none';
+    document.getElementById('deleteDatabaseForm').style.display = 'none';
+    document.getElementById('createCollectionForm').style.display = 'none';
+    document.getElementById('deleteCollectionForm').style.display = 'none';
+  }
+
+
+  function toggleDeleteDatabase() {
+    hideAllForms();
+    var form = document.getElementById('deleteDatabaseForm');
+    form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
+  }
+
+  function toggleCreateCollection() {
+    hideAllForms();
+    var form = document.getElementById('createCollectionForm');
+    form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
+  }
+
+  function toggleDeleteCollection() {
+    hideAllForms();
+    var form = document.getElementById('deleteCollectionForm');
+    form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
+  }
+
+  function toggleReadCollection() {
+    hideAllForms();
+    var form = document.getElementById('readCollectionForm');
+    form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
+  }
+
+  function createDatabase() {
+    var dbNameToCreate = document.getElementById('dbNameToCreate').value;
+    // Send a request to your backend to handle database creation (Endpoint: /createDatabase)
+  }
+
+  function deleteDatabase() {
+    var dbNameToDelete = document.getElementById('dbNameToDelete').value;
+    fetch('/deleteDatabase?databaseName=' + dbNameToDelete, {
+      method: 'DELETE',
+    }).then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response;
+        })
+        .then(data => {
+          // Handle successful response (if needed)
+          console.log('Database deleted successfully');
+        })
+        .catch(error => {
+          // Handle error
+          console.error('Error:', error);
+        });
+  }
+
+  function createCollection() {
+    var createDbName = document.getElementById('createDbName').value;
+    var createCollectionName = document.getElementById('createCollectionName').value;
+    var requestBody = {
+      dbName: createDbName,
+      collectionName: createCollectionName
+    };
+    fetch('/createCollection', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(requestBody)
+    }).then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json(); // Assuming the response is in JSON format
+      })
+      .then(data => {
+        // Handle successful response (if needed)
+        console.log('Collection created successfully', data);
+      })
+      .catch(error => {
+        // Handle error
+        console.error('Error:', error);
+      });
+  }
+
+  function deleteCollection() {
+    var deleteDbName = document.getElementById('deleteDbName').value;
+    var deleteCollectionName = document.getElementById('deleteCollectionName').value;
+    fetch('/deleteCollection?databaseName=' + deleteDbName + '&collectionName=' + deleteCollectionName, {
+      method: 'DELETE',
+    }).then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response;
+      })
+      .then(data => {
+        // Handle successful response (if needed)
+        console.log('Collection deleted successfully');
+      })
+      .catch(error => {
+        // Handle error
+        console.error('Error:', error);
+      });
+  }
+
+</script>
+</body>
+</html>

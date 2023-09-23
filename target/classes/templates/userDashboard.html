@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Dashboard</title>
+</head>
+<body>
+<h1>Welcome</h1>
+<button onclick="toggleCreateDocument()">Create Document</button>
+<button onclick="toggleDeleteDocument()">Delete Document</button>
+<button onclick="toggleReadDocument()">Read Document</button>
+<button onclick="toggleGetAllDocuments()">Get All Documents</button>
+<button onclick="toggleReadProperty()">Read Property</button>
+<button onclick="toggleUpdateProperty()">Update Property</button>
+
+<!-- Create Document Form -->
+<div id="createDocumentForm" style="display:none;">
+  <label for="createDbName">Database Name:</label>
+  <input type="text" id="createDbName"><br>
+  <label for="createCollectionName">Collection Name:</label>
+  <input type="text" id="createCollectionName"><br>
+  <button onclick="createDocument()">Create Document</button>
+</div>
+
+<!-- Delete Document Form -->
+<div id="deleteDocumentForm" style="display:none;">
+  <label for="deleteDbName">Database Name:</label>
+  <input type="text" id="deleteDbName"><br>
+  <label for="deleteCollectionName">Collection Name:</label>
+  <input type="text" id="deleteCollectionName"><br>
+  <label for="deleteDocumentId">Document ID:</label>
+  <input type="text" id="deleteDocumentId"><br>
+  <button onclick="deleteDocument()">Delete Document</button>
+</div>
+
+<!-- Read Document Form -->
+<div id="readDocumentForm" style="display:none;">
+  <label for="readDbName">Database Name:</label>
+  <input type="text" id="readDbName"><br>
+  <label for="readCollectionName">Collection Name:</label>
+  <input type="text" id="readCollectionName"><br>
+  <label for="readDocumentId">Document ID:</label>
+  <input type="text" id="readDocumentId"><br>
+  <button onclick="readDocument()">Read Document</button>
+</div>
+
+<!-- Get All Documents Form -->
+<div id="getAllDocumentsForm" style="display:none;">
+  <label for="getAllDbName">Database Name:</label>
+  <input type="text" id="getAllDbName"><br>
+  <label for="getAllCollectionName">Collection Name:</label>
+  <input type="text" id="getAllCollectionName"><br>
+  <button onclick="getAllDocuments()">Get All Documents</button>
+</div>
+
+<!-- Read Property Form -->
+<div id="readPropertyForm" style="display:none;">
+  <label for="readPropertyDbName">Database Name:</label>
+  <input type="text" id="readPropertyDbName"><br>
+  <label for="readPropertyCollectionName">Collection Name:</label>
+  <input type="text" id="readPropertyCollectionName"><br>
+  <label for="readPropertyDocumentId">Document ID:</label>
+  <input type="text" id="readPropertyDocumentId"><br>
+  <label for="readPropertyName">Property Name:</label>
+  <input type="text" id="readPropertyName"><br>
+  <button onclick="readProperty()">Read Property</button>
+</div>
+
+<!-- Update Property Form -->
+<div id="updatePropertyForm" style="display:none;">
+  <label for="updatePropertyDbName">Database Name:</label>
+  <input type="text" id="updatePropertyDbName"><br>
+  <label for="updatePropertyCollectionName">Collection Name:</label>
+  <input type="text" id="updatePropertyCollectionName"><br>
+  <label for="updatePropertyDocumentId">Document ID:</label>
+  <input type="text" id="updatePropertyDocumentId"><br>
+  <label for="updatePropertyName">Property Name:</label>
+  <input type="text" id="updatePropertyName"><br>
+  <label for="updatePropertyValue">New Property Value:</label>
+  <input type="text" id="updatePropertyValue"><br>
+  <button onclick="updateProperty()">Update Property</button>
+</div>
+
+<div id="readDocumentResult"></div>
+<div id="getAllDocumentsResult"></div>
+<div id="readPropertyResult"></div>
+
+<script>
+  function hideAllForms() {
+    document.getElementById('createDocumentForm').style.display = 'none';
+    document.getElementById('deleteDocumentForm').style.display = 'none';
+    document.getElementById('readDocumentForm').style.display = 'none';
+    document.getElementById('getAllDocumentsForm').style.display = 'none';
+    document.getElementById('readPropertyForm').style.display = 'none';
+    document.getElementById('updatePropertyForm').style.display = 'none';
+  }
+
+  function toggleCreateDocument() {
+    hideAllForms();
+    var form = document.getElementById('createDocumentForm');
+    form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
+  }
+
+  function toggleDeleteDocument() {
+    hideAllForms();
+    var form = document.getElementById('deleteDocumentForm');
+    form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
+  }
+
+  function toggleReadDocument() {
+    hideAllForms();
+    var form = document.getElementById('readDocumentForm');
+    form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
+  }
+
+  function toggleGetAllDocuments() {
+    hideAllForms();
+    var form = document.getElementById('getAllDocumentsForm');
+    form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
+  }
+
+  function toggleReadProperty() {
+    hideAllForms();
+    var form = document.getElementById('readPropertyForm');
+    form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
+  }
+
+  function toggleUpdateProperty() {
+    hideAllForms();
+    var form = document.getElementById('updatePropertyForm');
+    form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
+  }
+
+  function createDocument() {
+    var createDbName = document.getElementById('createDbName').value;
+    var createCollectionName = document.getElementById('createCollectionName').value;
+    fetch(`/createDocument?databaseName=${createDbName}&collectionName=${createCollectionName}`)
+  }
+
+  function deleteDocument() {
+    var deleteDbName = document.getElementById('deleteDbName').value;
+    var deleteCollectionName = document.getElementById('deleteCollectionName').value;
+    var deleteDocumentId = document.getElementById('deleteDocumentId').value;
+    fetch(`/deleteDocument?databaseName=${deleteDbName}&collectionName=${deleteCollectionName}&documentId=${deleteDocumentId}`, {
+      method: 'DELETE'
+    })
+  }
+
+  function readDocument() {
+    var readDbName = document.getElementById('readDbName').value;
+    var readCollectionName = document.getElementById('readCollectionName').value;
+    var readDocumentId = document.getElementById('readDocumentId').value;
+    fetch(`/readDocument?databaseName=${readDbName}&collectionName=${readCollectionName}&documentId=${readDocumentId}`).then(response => {
+      return response.text();
+    }).then(data => {
+      var resultContainer = document.getElementById('readDocumentResult');
+      resultContainer.textContent = data; // Update the content of a container element
+    })
+  }
+
+  function getAllDocuments() {
+    var getAllDbName = document.getElementById('getAllDbName').value;
+    var getAllCollectionName = document.getElementById('getAllCollectionName').value;
+    fetch(`/getAllDocuments?databaseName=${getAllDbName}&collectionName=${getAllCollectionName}`)
+    .then(response => {
+      return response.json();
+    })
+    .then(data => {
+      var resultContainer = document.getElementById('getAllDocumentsResult');
+      for (var fileId in data) {
+        if (data.hasOwnProperty(fileId)) {
+          var file = data[fileId];
+          var fileDiv = document.createElement('div');
+          fileDiv.textContent = "File ID: " + fileId + "\nFile: " + JSON.stringify(file);
+          resultContainer.appendChild(fileDiv);
+        }
+      }
+    })
+  }
+
+  function readProperty() {
+    var readPropertyDbName = document.getElementById('readPropertyDbName').value;
+    var readPropertyCollectionName = document.getElementById('readPropertyCollectionName').value;
+    var readPropertyDocumentId = document.getElementById('readPropertyDocumentId').value;
+    var readPropertyName = document.getElementById('readPropertyName').value;
+    fetch(`/readProperty?databaseName=${readPropertyDbName}&collectionName=${readPropertyCollectionName}&documentId=${readPropertyDocumentId}&propertyName=${readPropertyName}`).then(response => {
+      return response.text();
+    }).then(data => {
+      var resultContainer = document.getElementById('readPropertyResult');
+      resultContainer.textContent = data; // Update the content of a container element
+    })
+  }
+
+  function updateProperty() {
+    var updatePropertyDbName = document.getElementById('updatePropertyDbName').value;
+    var updatePropertyCollectionName = document.getElementById('updatePropertyCollectionName').value;
+    var updatePropertyDocumentId = document.getElementById('updatePropertyDocumentId').value;
+    var updatePropertyName = document.getElementById('updatePropertyName').value;
+    var updatePropertyValue = document.getElementById('updatePropertyValue').value;
+    var requestBody = {
+      dbName: updatePropertyDbName,
+      collectionName: updatePropertyCollectionName,
+      documentId: updatePropertyDocumentId,
+      propertyName: updatePropertyName,
+      propertyValue: updatePropertyValue
+    };
+
+    // Make a POST request using the Fetch API
+    fetch('/updateProperty', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(requestBody)
+    })
+  }
+</script>
+</body>
+</html>

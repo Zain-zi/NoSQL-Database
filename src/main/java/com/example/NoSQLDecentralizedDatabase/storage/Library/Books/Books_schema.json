@@ -1,0 +1,1 @@
+{"collectionName":"Books","properties":[{"name":"bookName","type":"string"},{"name":"ISBN","type":"string"}]}

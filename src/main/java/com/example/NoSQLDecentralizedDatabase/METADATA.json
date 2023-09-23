@@ -1,0 +1,76 @@
+{
+  "contents" : [ {
+    "contents" : [ {
+      "contents" : [ {
+        "name" : "dcc312db-4be7-4e4b-9099-e8facb9751c9.json",
+        "type" : "file"
+      }, {
+        "name" : "2fa1c3af-1997-4b65-939d-c625956441b4.json",
+        "type" : "file"
+      }, {
+        "name" : "335d997a-2df8-48e6-8bb0-b10e2fe487f6.json",
+        "type" : "file"
+      }, {
+        "name" : "64d9a64d-bc5c-4bc3-941a-3a769c84df20.json",
+        "type" : "file"
+      }, {
+        "name" : "401ebfc9-d8a2-4b45-ab35-fece25f821a7.json",
+        "type" : "file"
+      } ],
+      "name" : "users",
+      "type" : "directory"
+    }, {
+      "contents" : [ {
+        "name" : "345c43ef-ef7b-4ccc-80bc-c4f7896f1a2e.json",
+        "type" : "file"
+      }, {
+        "name" : "9353ca18-5ede-47ac-9b48-c72844b4a35f.json",
+        "type" : "file"
+      }, {
+        "name" : "bd1d9ac9-8407-4011-8b7f-b7c1538dea05.json",
+        "type" : "file"
+      }, {
+        "name" : "c3bafac2-5f8a-4a57-abcc-42d3842f14ca.json",
+        "type" : "file"
+      }, {
+        "name" : "ed830e14-f340-4485-9ca2-29fb8124ea9f.json",
+        "type" : "file"
+      } ],
+      "name" : "nodes",
+      "type" : "directory"
+    } ],
+    "name" : "system",
+    "type" : "directory"
+  }, {
+    "contents" : [ {
+      "databaseName" : "Library",
+      "contents" : [ {
+        "databaseName" : "Library",
+        "id" : "LibraryUsers_schema",
+        "collectionName" : "LibraryUsers"
+      } ],
+      "name" : "LibraryUsers"
+    }, {
+      "databaseName" : "Library",
+      "contents" : [ {
+        "databaseName" : "Library",
+        "id" : "Books_schema",
+        "collectionName" : "Books"
+      } ],
+      "name" : "Books"
+    } ],
+    "name" : "Library"
+  }, {
+    "name" : "TestDatabase",
+    "contents" : [ {
+      "name" : "testcollection2",
+      "databaseName" : "TestDatabase",
+      "contents" : [ {
+        "collectionName" : "testcollection2",
+        "databaseName" : "TestDatabase",
+        "id" : "testcollection2_schema"
+      } ]
+    } ]
+  } ],
+  "directory" : "storage"
+}
