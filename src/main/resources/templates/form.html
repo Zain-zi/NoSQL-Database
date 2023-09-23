@@ -1,0 +1,37 @@
+<form id="myForm"><input type="hidden" name="stringData" id="stringData" value="">
+<h2>LibraryUsers Form</h2><table><tr><td><label for="username">username:</label></td><td><input type="text" id="username" name="username" required><br></td></tr><tr><td><label for="password">password:</label></td><td><input type="text" id="password" name="password" required><br></td></tr><tr><td><label for="email">email:</label></td><td><input type="text" id="email" name="email" required><br></td></tr><tr><td><label for="booksBorrowed">booksBorrowed:</label></td><td><textarea id="booksBorrowed" name="booksBorrowed" rows="4" cols="50"></textarea><br></td></tr></table><button type="button" onclick="submitForm()">Submit</button></form><script>
+function submitForm() {
+    const form = document.getElementById('myForm');
+    const formData = {};
+    const inputs = form.getElementsByTagName('input');
+    for (let i = 0; i < inputs.length; i++) {
+        const input = inputs[i];
+        if (input.name !== 'stringData') {
+            formData[input.name] = input.value;
+        }
+    }
+    const textArea = form.getElementsByTagName('textarea')[0];
+    formData[textArea.name] = textArea.value;
+    const stringData = JSON.stringify(formData);
+    document.getElementById('stringData').value = stringData;
+    // Call the endpoint with the form data
+    const endpoint = '/documents/Library/LibraryUsers';
+    fetch(endpoint, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: stringData
+    })
+    .then(response => {
+        if (response.status === 201) {
+            console.log('Data sent successfully');
+        } else {
+            console.error('Failed to send data');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+</script>
