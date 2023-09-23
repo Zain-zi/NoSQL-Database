@@ -16,10 +16,10 @@
 
 <!-- Create Document Form -->
 <div id="createDocumentForm" style="display:none;">
-  <label for="createDbName">Database Name:</label>
-  <input type="text" id="createDbName"><br>
-  <label for="createCollectionName">Collection Name:</label>
-  <input type="text" id="createCollectionName"><br>
+  <label for="databaseName">Database Name:</label>
+  <input type="text" id="databaseName"><br>
+  <label for="collectionName">Collection Name:</label>
+  <input type="text" id="collectionName"><br>
   <button onclick="createDocument()">Create Document</button>
 </div>
 
@@ -133,9 +133,9 @@
   }
 
   function createDocument() {
-    var createDbName = document.getElementById('createDbName').value;
-    var createCollectionName = document.getElementById('createCollectionName').value;
-    fetch(`/createDocument?databaseName=${createDbName}&collectionName=${createCollectionName}`)
+    var databaseName = document.getElementById("databaseName").value;
+    var collectionName = document.getElementById("collectionName").value;
+    window.location.href = '/createDocument/' + databaseName + '/' + collectionName;
   }
 
   function deleteDocument() {
