@@ -1,16 +1,25 @@
 package com.example.NoSQLDecentralizedDatabase.controllers;
 
+import ch.qos.logback.core.joran.conditional.ThenAction;
 import com.example.NoSQLDecentralizedDatabase.services.DocumentsService;
 import com.example.NoSQLDecentralizedDatabase.services.FileService;
 import com.example.NoSQLDecentralizedDatabase.services.FormGeneratorService;
 import com.example.NoSQLDecentralizedDatabase.services.NodeService;
 import com.google.gson.JsonObject;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,13 +31,23 @@ public class DocumentsController {
         return "userDashboard";
     }
 
-    @GetMapping("/createDocument")
-    public String getForm(@RequestParam String databaseName, @RequestParam String collectionName) {
+    @GetMapping( "/createDocument/{databaseName}/{collectionName}")
+    public String getForm(@PathVariable String databaseName, @PathVariable String collectionName) {
         if (NodeService.isBootstrap()) {
             System.out.println("BAD REQUEST");
         }
         String schema = FileService.readJSONSchema(FileService.getPath() + File.separator + databaseName + File.separator + collectionName + File.separator + collectionName + "_schema.json");
-        return FormGeneratorService.generateFormFromSchema(schema, databaseName);
+        String formHtml = FormGeneratorService.generateFormFromSchema(schema, databaseName);
+        try {
+            File tempFile = new File("src/main/resources/templates", "form.html");
+            FileWriter writer = new FileWriter(tempFile);
+            writer.write(formHtml);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return "form";
     }
 
     @PostMapping("/documents/{databaseName}/{collectionName}")
